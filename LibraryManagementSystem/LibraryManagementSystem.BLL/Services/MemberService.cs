@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Intrinsics.Arm;
 using System.Text.RegularExpressions;
-using LibraryManagementSystem.BLL.Exceptions;
 using LibraryManagementSystem.BLL.Interfaces;
 using LibraryManagementSystem.Core.Models;
 using LibraryManagementSystem.DAL.DBContext;
