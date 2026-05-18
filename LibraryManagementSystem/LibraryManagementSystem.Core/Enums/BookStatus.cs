@@ -1,4 +1,4 @@
-namespace LibraryManagementSystem.Enums
+namespace LibraryManagementSystem.Core.Enums
 {
     public enum BookStatus
     {
