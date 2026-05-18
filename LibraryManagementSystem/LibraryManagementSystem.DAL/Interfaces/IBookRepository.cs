@@ -7,9 +7,11 @@ namespace LibraryManagementSystem.DAL.Interface
         void AddBook(BookTitle bookTitle);
         void AddBookCopy(BookCopy bookCopy);
         void UpdateCopy(BookCopy bookCopy);
-        BookTitle? GetBookById(int bookTitleId);
+        void UpdateBook(BookTitle bookTitle);
+        BookTitle? GetBookTitleById(int bookTitleId);
         BookCopy? GetBookCopyById(int bookCopyId);
         List<BookTitle> GetAllBooks();
+        List<BookCopy> GetAllBookCopies();
         List<BookTitle> SearchBooks(string keyword);
         List<BookTitle> GetBooksByCategory(int categoryId);
         BookCopy? GetAvailableCopy(int bookTitleId);
