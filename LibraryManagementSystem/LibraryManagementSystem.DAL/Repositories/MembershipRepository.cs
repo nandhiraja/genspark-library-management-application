@@ -16,6 +16,11 @@ namespace LibraryManagementSystem.DAL.Repositories
             _context.MembershipTypes.Add(membershipType);
             _context.SaveChanges();
         }
+
+        public List<MembershipType> GetAllMemberShipType()
+        {
+            return _context.MembershipTypes.ToList();
+        }
         public MembershipType? GetMembershipType(int memberShipTypeId)
         {
             return _context.MembershipTypes.Find(memberShipTypeId);

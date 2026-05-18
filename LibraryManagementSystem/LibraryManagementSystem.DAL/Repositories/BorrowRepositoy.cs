@@ -3,7 +3,9 @@ using System.Transactions;
 using LibraryManagementSystem.Core.Models;
 using LibraryManagementSystem.DAL.DBContext;
 using LibraryManagementSystem.DAL.Interface;
+using LibraryManagementSystem.Core.Enums;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace LibraryManagementSystem.DAL.Repositories
 {
@@ -25,23 +27,27 @@ namespace LibraryManagementSystem.DAL.Repositories
         {
             List<BorrowTransaction> transactions = _context.BorrowTransactions
                                                                         .Where(t=> t.MemberId ==memberId 
-                                                                        && (t.Status== Enums.BorrowStatus.Borrowed || t.Status == Enums.BorrowStatus.Overdue))
+                                                                        && (t.Status== BorrowStatus.Borrowed || t.Status ==BorrowStatus.Overdue))
                                                                         .ToList();
             return transactions.Count;
         }
 
         public List<BorrowTransaction> GetActiveBorrowsByMember(int memberId)
         {
-            List<BorrowTransaction> transactions = _context.BorrowTransactions.Where(t=> t.MemberId == memberId).ToList(); 
-            return transactions;  
+            return _context.BorrowTransactions
+                    .Include(t => t.BookCopy)
+                    .ThenInclude(bc => bc.BookTitle)
+                    .Where(t => t.MemberId == memberId
+                            && (t.Status == BorrowStatus.Borrowed || t.Status == BorrowStatus.Overdue))
+                    .ToList();
         }
 
         public BorrowTransaction? GetActiveBorrowTransaction(int memberId, int bookCopyId)
         {
             return _context.BorrowTransactions.FirstOrDefault(t=> t.MemberId ==memberId 
                                                                                 && t.BookCopyId==bookCopyId
-                                                                                && (t.Status== Enums.BorrowStatus.Borrowed 
-                                                                                || t.Status == Enums.BorrowStatus.Overdue)
+                                                                                && (t.Status==BorrowStatus.Borrowed 
+                                                                                || t.Status == BorrowStatus.Overdue)
                                                                                 );
                                                 
                                                                         
@@ -49,8 +55,10 @@ namespace LibraryManagementSystem.DAL.Repositories
 
         public List<BorrowTransaction> GetBorrowHistoryByMember(int memberId)
         {
-             List<BorrowTransaction> transactions = _context.BorrowTransactions.Where(t=> t.MemberId ==memberId ).ToList();
-             return transactions;
+             return _context.BorrowTransactions.Include(t => t.BookCopy)
+                                                 .ThenInclude(bc => bc.BookTitle)
+                                                 .Where(t => t.MemberId == memberId)
+                                                 .ToList();
         }
 
         public BorrowTransaction? GetById(int borrowId)
@@ -62,7 +70,7 @@ namespace LibraryManagementSystem.DAL.Repositories
         public bool HasActiveBorrowingForBook(int memberId, int bookTitleId)
         {
             bool isHaveActiveBorrow = _context.BorrowTransactions.Any( t=>t.MemberId == memberId && t.BookCopy.BookTitleId==bookTitleId 
-                                                                                        && (t.Status == Enums.BorrowStatus.Borrowed || t.Status == Enums.BorrowStatus.Overdue));
+                                                                                        && (t.Status ==BorrowStatus.Borrowed || t.Status == BorrowStatus.Overdue));
              return isHaveActiveBorrow; 
         }
 
@@ -80,6 +88,13 @@ namespace LibraryManagementSystem.DAL.Repositories
                 _context.SaveChanges();
 
             }
+        public List<BorrowTransaction> GetAllBorrowTransactions()
+        {
+            return _context.BorrowTransactions.Include(t => t.Member).Include(t => t.BookCopy)
+                                                .ThenInclude(bc => bc.BookTitle)
+                                                .Include(t => t.Fine)
+                                                .ToList();
+        }
     }
 
 }

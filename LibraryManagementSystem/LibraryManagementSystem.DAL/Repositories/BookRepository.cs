@@ -1,6 +1,8 @@
 using LibraryManagementSystem.Core.Models;
 using LibraryManagementSystem.DAL.DBContext;
 using LibraryManagementSystem.DAL.Interface;
+using Microsoft.EntityFrameworkCore;
+using LibraryManagementSystem.Core.Enums;
 
 namespace LibraryManagementSystem.DAL.Repositories
 {
@@ -30,20 +32,22 @@ namespace LibraryManagementSystem.DAL.Repositories
 
         public List<BookTitle> GetAllBooks()
         {
-            
-            List<BookTitle> books = _context.BookTitles.ToList();   
-            return books;
-      
+            return _context.BookTitles.Include(bt => bt.Category).ToList();
+        }
+
+         public List<BookCopy> GetAllBookCopies()
+        {
+            return _context.BookCopies.Include(bc => bc.BookTitle).ToList();
         }
 
         public BookCopy? GetAvailableCopy(int bookTitleId)
         {
              
-            return _context.BookCopies.FirstOrDefault(b => b.BookTitleId== bookTitleId && b.Status == Enums.BookStatus.Available);
+            return _context.BookCopies.FirstOrDefault(b => b.BookTitleId== bookTitleId && b.Status == BookStatus.Available);
    
         }
 
-        public BookTitle? GetBookById(int bookTitleId)
+        public BookTitle? GetBookTitleById(int bookTitleId)
         {
             
             return  _context.BookTitles.Find(bookTitleId);
@@ -77,19 +81,28 @@ namespace LibraryManagementSystem.DAL.Repositories
 
         public void UpdateCopy(BookCopy bookCopy)
         {
-            
-               BookCopy? book =  _context.BookCopies.FirstOrDefault(b=>b.CopyCode == bookCopy.CopyCode);
-               if(book == null)
-                {
-                    throw new Exception("BookCopy Not Found");
-                }
-                book.Status = bookCopy.Status;
-                book.BookTitle = bookCopy.BookTitle;
-                book.BookTitleId = bookCopy.BookTitleId;
+            BookCopy? book = _context.BookCopies.FirstOrDefault(b => b.CopyCode == bookCopy.CopyCode);
+            if(book == null)
+            {
+                throw new Exception("BookCopy Not Found");
+            }
+            book.Status = bookCopy.Status;
+            book.BookTitleId = bookCopy.BookTitleId;
+            _context.SaveChanges();
+        }
 
-            
-           
+        public void UpdateBook(BookTitle bookTitle)
+        {
+            BookTitle? existing = _context.BookTitles.Find(bookTitle.BookTitleId);
+            if(existing == null)
+            {
+                throw new Exception("BookTitle Not Found");
+            }
+            existing.Title = bookTitle.Title;
+            existing.Author = bookTitle.Author;
+            existing.CategoryId = bookTitle.CategoryId;
+            existing.PublishedYear = bookTitle.PublishedYear;
+            _context.SaveChanges();
         }
     }
 }
-    
