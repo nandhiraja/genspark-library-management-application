@@ -1,4 +1,4 @@
-using LibraryManagementSystem.Enums;
+using LibraryManagementSystem.Core.Enums;
 namespace LibraryManagementSystem.Core.Models
 {
 public class BorrowTransaction
