@@ -23,7 +23,7 @@ namespace LibraryManagementSystem.BLL.Services
 
         public Fine ReturnBook(Member member, BorrowTransaction borrowTransaction, BookStatus bookStatus)
         {
-            borrowTransaction.ReturnDate = DateTime.Now;
+            borrowTransaction.ReturnDate = DateTime.UtcNow;
             int fineAmount = 0;
 
             if (borrowTransaction.ReturnDate.HasValue && borrowTransaction.ReturnDate > borrowTransaction.DueDate)

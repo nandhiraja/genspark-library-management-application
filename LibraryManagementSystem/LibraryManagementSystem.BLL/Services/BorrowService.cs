@@ -67,8 +67,8 @@ namespace LibraryManagementSystem.BLL.Services
                                                     {
                                                         MemberId = member.MemberId,
                                                         BookCopyId = availableCopy.BookCopyId,
-                                                        BorrowDate = DateTime.Now,
-                                                        DueDate = DateTime.Now.AddDays(member.MembershipType.MaxDays),
+                                                        BorrowDate = DateTime.UtcNow,
+                                                        DueDate = DateTime.UtcNow.AddDays(member.MembershipType.MaxDays),
                                                         Status = BorrowStatus.Borrowed
                                                     };
 
@@ -97,6 +97,11 @@ namespace LibraryManagementSystem.BLL.Services
         public List<BorrowTransaction> GetActiveBorrows(int memberId)
         {
             return _borrowRepository.GetActiveBorrowsByMember(memberId);
+        }
+
+           public BorrowTransaction? GetBorrowsTransactionByID(int borrowId)
+        {
+            return _borrowRepository.GetById(borrowId);
         }
     }
 }
