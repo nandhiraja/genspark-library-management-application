@@ -34,19 +34,20 @@ namespace LibraryManagementSystem.BLL.Services
                     t.Status == BorrowStatus.Overdue)
                 .ToList();
 
-            Console.WriteLine("\n==================== CURRENTLY BORROWED BOOKS ====================\n");
+            Console.WriteLine("\n====================== CURRENTLY BORROWED BOOKS ======================\n");
 
             foreach (var transaction in borrowedBooks)
             {
                 Console.WriteLine($"Member : {transaction.Member?.Name}");
-
                 Console.WriteLine($"Book   : {transaction.BookCopy?.BookTitle?.Title}");
+                Console.WriteLine($"Copy   : {transaction.BookCopy?.CopyCode}");
+                Console.WriteLine($"Due    : {transaction.DueDate.ToShortDateString()}");
+                
+                Console.ForegroundColor = transaction.Status == BorrowStatus.Overdue ? ConsoleColor.Red : ConsoleColor.Cyan;
+                Console.WriteLine($"Status : {transaction.Status}");
+                Console.ResetColor();
 
-                Console.WriteLine( $"Copy   : {transaction.BookCopy?.CopyCode}");
-
-                Console.WriteLine( $"Due    : {transaction.DueDate.ToShortDateString()}");
-
-                Console.WriteLine("--------------------------------------------------\n");
+                Console.WriteLine("-----------------------------------------------------------------------\n");
             }
         }
 
@@ -56,19 +57,30 @@ namespace LibraryManagementSystem.BLL.Services
             List<BorrowTransaction> overdueBooks =
                 _borrowRepository
                 .GetAllBorrowTransactions()
-                .Where(t =>t.ReturnDate == null &&t.DueDate < DateTime.Now)
+                .Where(t =>t.ReturnDate == null &&t.DueDate < DateTime.UtcNow)
                 .ToList();
 
-            Console.WriteLine("\n==================== OVERDUE BOOKS ====================\n");
+            Console.WriteLine("\n======================== OVERDUE BOOKS =========================\n");
+
+             if(overdueBooks.Count == 0)
+            {
+               Console.WriteLine("\n ----------------- NO OVER DUE YET  - EMPTY ---------------------\n");
+               return;
+
+            }
 
             foreach (var transaction in overdueBooks)
             {
-                int delayedDays =(DateTime.Now - transaction.DueDate).Days;
+                int delayedDays =(DateTime.UtcNow - transaction.DueDate).Days;
 
-                Console.WriteLine( $"Member : {transaction.Member?.Name} || Delayed Days : {delayedDays}");
-                Console.WriteLine( $"Book   : {transaction.BookCopy?.BookTitle?.Title}");
+                Console.WriteLine($"Member       : {transaction.Member?.Name}");
+                Console.WriteLine($"Book         : {transaction.BookCopy?.BookTitle?.Title}");
+                
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Delayed Days : {delayedDays} days");
+                Console.ResetColor();
 
-                Console.WriteLine("--------------------------------------------------\n");
+                Console.WriteLine("-----------------------------------------------------------------------\n");
             }
         }
 
@@ -82,13 +94,24 @@ namespace LibraryManagementSystem.BLL.Services
                 .Where(f => !f.IsPaid)
                 .ToList();
 
-            Console.WriteLine("\n==================== MEMBERS WITH PENDING FINES ====================\n");
+            Console.WriteLine("\n==================== MEMBERS WITH PENDING FINES =====================\n");
 
+            if(unpaidFines.Count == 0)
+            {
+               Console.WriteLine("\n ----------------- NO PENDING FINES YET  - EMPTY ---------------------\n");
+               return;
+
+            }
             foreach (var fine in unpaidFines)
             {
-                Console.WriteLine($"Member : {fine.BorrowTransaction?.Member?.Name} | Amount : ₹{fine.Amount}");
+                Console.WriteLine($"Member : {fine.BorrowTransaction?.Member?.Name}");
+                
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Amount : Rs.{fine.Amount}");
+                Console.ResetColor();
 
-                Console.WriteLine("--------------------------------------------------\n");
+                Console.WriteLine("-----------------------------------------------------------------------\n");
+
             }
         }
 
@@ -111,9 +134,15 @@ namespace LibraryManagementSystem.BLL.Services
 
             foreach (var item in mostBorrowed)
             {
-                Console.WriteLine(
-                    $"{item.Title} --> Borrowed {item.Count} times");
+                Console.WriteLine($"Title    : {item.Title}");
+                
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"Borrowed : {item.Count} times");
+                Console.ResetColor();
             }
+
+            Console.WriteLine("\n==================== ==================== ====================\n");
+
         }
 
     
@@ -133,27 +162,51 @@ namespace LibraryManagementSystem.BLL.Services
                 Console.WriteLine( $"Title : {book.BookTitle.Title}");
                 Console.WriteLine($"Copy Code : {book.CopyCode}");
 
-                Console.WriteLine("--------------------------------------------------\n");
+                Console.WriteLine("-----------------------------------------------------------------------\n");
+
             }
         }
 
       
         public void ShowMemberBorrowHistory(int memberId)
         {
-            List<BorrowTransaction> history =
-                _borrowRepository
-                .GetBorrowHistoryByMember(memberId);
+            List<BorrowTransaction> history =_borrowRepository.GetBorrowHistoryByMember(memberId);
 
-            Console.WriteLine("\n==================== MEMBER BORROW HISTORY ====================\n");
+            Console.WriteLine($"\n=============== MEMBER BORROW HISTORY ID : {memberId} ==================\n");
 
             foreach (var transaction in history)
             {
-                Console.WriteLine( $"Book : {transaction.BookCopy.BookTitle.Title}");
+                Console.WriteLine($"Book     : {transaction.BookCopy?.BookTitle?.Title}");
+                Console.WriteLine($"Borrowed : {transaction.BorrowDate.ToShortDateString()}");
+                Console.WriteLine($"Returned : {transaction.ReturnDate?.ToShortDateString() ?? "Not Returned"}");
+                
+                Console.ForegroundColor = transaction.Status == BorrowStatus.Returned ? ConsoleColor.Green : (transaction.Status == BorrowStatus.Overdue ? ConsoleColor.Red : ConsoleColor.Cyan);
+                Console.WriteLine($"Status   : {transaction.Status}");
+                Console.ResetColor();
 
-                Console.Write($"Borrowed : {transaction.BorrowDate.ToShortDateString()} || ");
-                Console.Write( $"Returned : {transaction.ReturnDate} || Status : {transaction.Status}");
+                Console.WriteLine("-----------------------------------------------------------------------\n");
+            }
+        }
 
-                Console.WriteLine("--------------------------------------------------\n");
+        public void ShowAllMembers()
+        {
+            List<Member> allMembers = _memberRepository.GetAllMembers();
+           
+            Console.WriteLine("\n============================ MEMBER LIST ============================\n");
+
+            if(allMembers.Count == 0)
+            {
+                Console.WriteLine("---------------------NO MEMBERS REGISTERED YET  -----------------------\n");
+                return;
+            }
+
+            foreach(var member in allMembers)
+            {
+                Console.WriteLine($"\nId : {member.MemberId} | Name : {member.Name} | Email : {member.Email}");
+                Console.WriteLine($"Phone No : {member.Phone} | MemberShip : {member.MembershipType.Name}" );
+                Console.WriteLine("-----------------------------------------------------------------------\n");
+
+
             }
         }
     }
