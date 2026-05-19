@@ -1,0 +1,661 @@
+nandhiraja@Mac LibraryManagementSystem % dotnet run --project LibraryManagementSystem.PL
+
+ ================================== Library ========================================
+
+        1.Login
+        2.Register Member
+        3.Quit App
+
+1 
+
+================================= LOGIN ==========================================
+
+Enter your Email id : nandhi@gmail.com
+Enter your Password : 123456
+
+======================== Library  : Access - User ================================ 
+
+User Name : Nandhiraja K 
+=================================== 
+
+
+Choose options
+
+        1.See all books 
+        2.Borrow New Book 
+        3.Return Books
+        4.My Borrow History 
+        5.My Fine History 
+        6.Exit
+1
+ ========================= All available books =============================
+
+BookTitleId : 1
+Title       : Dune
+Author      : Frank Herbert
+Category    : Science Fiction
+Available   : 2 copies
+----------------------------------------------------------------------------
+
+BookTitleId : 2
+Title       : Clean Code
+Author      : Robert C. Martin
+Category    : Technology
+Available   : 2 copies
+----------------------------------------------------------------------------
+
+BookTitleId : 3
+Title       : Sapiens
+Author      : Yuval Noah Harari
+Category    : History
+Available   : 1 copies
+----------------------------------------------------------------------------
+
+BookTitleId : 4
+Title       : The Hobbit
+Author      : J.R.R. Tolkien
+Category    : Fantasy
+Available   : 1 copies
+----------------------------------------------------------------------------
+
+BookTitleId : 5
+Title       : Harry Potter and the Sorcerer's Stone
+Author      : J.K. Rowling
+Category    : Fantasy
+Available   : 1 copies
+----------------------------------------------------------------------------
+
+BookTitleId : 6
+Title       : Gone Girl
+Author      : Gillian Flynn
+Category    : Mystery & Thriller
+Available   : 1 copies
+----------------------------------------------------------------------------
+
+BookTitleId : 7
+Title       : The Da Vinci Code
+Author      : Dan Brown
+Category    : Mystery & Thriller
+Available   : 1 copies
+----------------------------------------------------------------------------
+
+BookTitleId : 8
+Title       : Steve Jobs
+Author      : Walter Isaacson
+Category    : Biography
+Available   : 1 copies
+----------------------------------------------------------------------------
+
+BookTitleId : 9
+Title       : Becoming
+Author      : Michelle Obama
+Category    : Biography
+Available   : 1 copies
+----------------------------------------------------------------------------
+
+BookTitleId : 10
+Title       : Atomic Habits
+Author      : James Clear
+Category    : Self-Help
+Available   : 2 copies
+----------------------------------------------------------------------------
+
+BookTitleId : 11
+Title       : Thinking, Fast and Slow
+Author      : Daniel Kahneman
+Category    : Self-Help
+Available   : 1 copies
+----------------------------------------------------------------------------
+
+ ===========================================================================
+
+
+Choose options
+
+        1.See all books 
+        2.Borrow New Book 
+        3.Return Books
+        4.My Borrow History 
+        5.My Fine History 
+        6.Exit
+3
+========================== Return Book ====================
+
+Your Active Borrows :
+
+BorrowId: 6 | Book: The Da Vinci Code | Due: 27/05/2026 | Status: Borrowed
+
+Enter BorrowId to return : 4
+Borrow record not found
+
+Choose options
+
+        1.See all books 
+        2.Borrow New Book 
+        3.Return Books
+        4.My Borrow History 
+        5.My Fine History 
+        6.Exit
+4
+========================== My Borrow History ====================
+
+
+=============== MEMBER BORROW HISTORY ID : 3 ==================
+
+Book     : Harry Potter and the Sorcerer's Stone
+Borrowed : 29/04/2026
+Returned : 07/05/2026
+Status   : Returned
+-----------------------------------------------------------------------
+
+Book     : Gone Girl
+Borrowed : 30/03/2026
+Returned : 14/04/2026
+Status   : Returned
+-----------------------------------------------------------------------
+
+Book     : The Da Vinci Code
+Borrowed : 17/05/2026
+Returned : Not Returned
+Status   : Borrowed
+-----------------------------------------------------------------------
+
+
+Choose options
+
+        1.See all books 
+        2.Borrow New Book 
+        3.Return Books
+        4.My Borrow History 
+        5.My Fine History 
+        6.Exit
+5
+========================== My Fines ====================
+
+Pending Fines :
+
+FineId: 2 | Book: Gone Girl
+Amount: Rs.50.00 | Paid: False
+--------------------------------------------------
+
+Total Pending : Rs.50.00
+
+Pay a fine? yes/no
+no
+
+
+Choose options
+
+        1.See all books 
+        2.Borrow New Book 
+        3.Return Books
+        4.My Borrow History 
+        5.My Fine History 
+        6.Exit
+3
+========================== Return Book ====================
+
+Your Active Borrows :
+
+BorrowId: 6 | Book: The Da Vinci Code | Due: 27/05/2026 | Status: Borrowed
+
+Enter BorrowId to return : 6
+Is the book in good condition?
+        1.Good (Available)
+        2.Damaged
+        3.Lost
+1
+
+Book returned successfully!
+No fine applied returned on time
+
+Choose options
+
+        1.See all books 
+        2.Borrow New Book 
+        3.Return Books
+        4.My Borrow History 
+        5.My Fine History 
+        6.Exit
+5
+========================== My Fines ====================
+
+Pending Fines :
+
+FineId: 2 | Book: Gone Girl
+Amount: Rs.50.00 | Paid: False
+--------------------------------------------------
+
+Total Pending : Rs.50.00
+
+Pay a fine? yes/no
+yes
+Enter FineId to pay : 2
+Fine Rs.50.00 paid successfully
+
+Choose options
+
+        1.See all books 
+        2.Borrow New Book 
+        3.Return Books
+        4.My Borrow History 
+        5.My Fine History 
+        6.Exit
+5
+========================== My Fines ====================
+No pending fines
+
+Choose options
+
+        1.See all books 
+        2.Borrow New Book 
+        3.Return Books
+        4.My Borrow History 
+        5.My Fine History 
+        6.Exit
+2
+========================== Borrow Books ====================
+
+Choose option: 
+        1.See all books 
+        2.Search book
+2
+
+Search (Type: Title/ Author / Category or [to exit type 'exit'] ) : Code
+BookTitleId : 2
+Title       : Clean Code
+Author      : Robert C. Martin
+Category    : Technology
+Available   : 2 copies
+----------------------------------------------------------------------------
+
+BookTitleId : 7
+Title       : The Da Vinci Code
+Author      : Dan Brown
+Category    : Mystery & Thriller
+Available   : 1 copies
+----------------------------------------------------------------------------
+
+        1.Login
+        2.Register Member
+        3.Quit App
+
+1
+
+================================= LOGIN ==========================================
+
+Enter your Email id : admin@library.com
+Enter your Password : admin123 
+
+==================== Library Management : Access - Admin ========================= 
+
+Admin Name : Library Admin 
+=================================== 
+
+
+Our Management options
+
+        1.Book Management
+        2.User Management
+        3.Category Management
+        4.Membership Management
+        5.Report
+        6.Exit
+2
+        1.View All Members 
+        2.Update Member Active Status 
+        3.Search Member 
+        4.Exit
+1
+
+====================== Members  ========================
+
+Id: 1 | Name: Library Admin | Email: admin@library.com | Phone: 9876543210 | Active: True
+Id: 2 | Name: John Doe | Email: john@gmail.com | Phone: 1234567890 | Active: True
+Id: 3 | Name: Nandhiraja K | Email: nandhi@gmail.com | Phone: 0987654312 | Active: True
+Id: 4 | Name: Ramesh | Email: ramesh@gmail.com | Phone: 54321890 | Active: True
+
+Our Management options
+
+        1.Book Management
+        2.User Management
+        3.Category Management
+        4.Membership Management
+        5.Report
+        6.Exit
+3
+        1.View All Categories 
+        2.Add Category 
+        3.Exit
+1
+
+====================== Categories  ========================
+
+Id: 1 | Name: Science Fiction
+Id: 2 | Name: Technology
+Id: 3 | Name: History
+Id: 4 | Name: Fantasy
+Id: 5 | Name: Mystery & Thriller
+Id: 6 | Name: Biography
+Id: 7 | Name: Self-Help
+
+Our Management options
+
+        1.Book Management
+        2.User Management
+        3.Category Management
+        4.Membership Management
+        5.Report
+        6.Exit
+4
+        1.View All Membership 
+        2.Add Membership 
+        3.Update Membership 
+        4.Exit
+1
+
+============================== Available MemberShipType ========================================
+
+SI No: 1 | Id: 1 | Name: Basic | MaxBooks: 2 | MaxDays: 7
+SI No: 2 | Id: 2 | Name: Student | MaxBooks: 3 | MaxDays: 10
+SI No: 3 | Id: 3 | Name: Premium | MaxBooks: 5 | MaxDays: 15
+
+Our Management options
+
+        1.Book Management
+        2.User Management
+        3.Category Management
+        4.Membership Management
+        5.Report
+        6.Exit
+5
+
+================================== Reports ===============================
+
+        1.Books Currently Borrowed
+        2.Overdue Books
+        3.Members with Pending Fines
+        4.Most Borrowed Books
+        5.Available Books
+        6.List All Members
+        7.Member Borrow History
+        8.Exit
+1
+
+====================== CURRENTLY BORROWED BOOKS ======================
+
+Member : Nandhiraja K
+Book   : The Da Vinci Code
+Copy   : MYS-DVC-01
+Due    : 27/05/2026
+Status : Borrowed
+-----------------------------------------------------------------------
+
+Member : John Doe
+Book   : The Hobbit
+Copy   : FANT-HOB-01
+Due    : 11/05/2026
+Status : Overdue
+-----------------------------------------------------------------------
+
+Member : Ramesh
+Book   : Atomic Habits
+Copy   : SH-AH-01
+Due    : 09/05/2026
+Status : Overdue
+-----------------------------------------------------------------------
+
+
+================================== Reports ===============================
+
+        1.Books Currently Borrowed
+        2.Overdue Books
+        3.Members with Pending Fines
+        4.Most Borrowed Books
+        5.Available Books
+        6.List All Members
+        7.Member Borrow History
+        8.Exit
+2
+
+======================== OVERDUE BOOKS =========================
+
+Member       : John Doe
+Book         : The Hobbit
+Delayed Days : 8 days
+-----------------------------------------------------------------------
+
+Member       : Ramesh
+Book         : Atomic Habits
+Delayed Days : 10 days
+-----------------------------------------------------------------------
+
+
+================================== Reports ===============================
+
+        1.Books Currently Borrowed
+        2.Overdue Books
+        3.Members with Pending Fines
+        4.Most Borrowed Books
+        5.Available Books
+        6.List All Members
+        7.Member Borrow History
+        8.Exit
+4
+
+==================== MOST BORROWED BOOKS ====================
+
+Title    : Sapiens
+Borrowed : 1 times
+Title    : Gone Girl
+Borrowed : 1 times
+Title    : Steve Jobs
+Borrowed : 1 times
+Title    : Becoming
+Borrowed : 1 times
+Title    : The Da Vinci Code
+Borrowed : 1 times
+
+==================== ==================== ====================
+
+
+================================== Reports ===============================
+
+        1.Books Currently Borrowed
+        2.Overdue Books
+        3.Members with Pending Fines
+        4.Most Borrowed Books
+        5.Available Books
+        6.List All Members
+        7.Member Borrow History
+        8.Exit
+5
+
+==================== AVAILABLE BOOKS ====================
+
+Title : Dune
+Copy Code : DUNE-01
+-----------------------------------------------------------------------
+
+Title : Dune
+Copy Code : DUNE-02
+-----------------------------------------------------------------------
+
+Title : Clean Code
+Copy Code : CC-01
+-----------------------------------------------------------------------
+
+Title : Clean Code
+Copy Code : CC-02
+-----------------------------------------------------------------------
+
+Title : Sapiens
+Copy Code : SAP-01
+-----------------------------------------------------------------------
+
+Title : The Hobbit
+Copy Code : FANT-HOB-02
+-----------------------------------------------------------------------
+
+Title : Harry Potter and the Sorcerer's Stone
+Copy Code : FANT-HP-01
+-----------------------------------------------------------------------
+
+Title : Gone Girl
+Copy Code : MYS-GG-01
+-----------------------------------------------------------------------
+
+Title : The Da Vinci Code
+Copy Code : MYS-DVC-02
+-----------------------------------------------------------------------
+
+Title : Steve Jobs
+Copy Code : BIO-SJ-01
+-----------------------------------------------------------------------
+
+Title : Becoming
+Copy Code : BIO-BEC-01
+-----------------------------------------------------------------------
+
+Title : Atomic Habits
+Copy Code : SH-AH-02
+-----------------------------------------------------------------------
+
+Title : Atomic Habits
+Copy Code : SH-AH-03
+-----------------------------------------------------------------------
+
+Title : Thinking, Fast and Slow
+Copy Code : SH-TFS-01
+-----------------------------------------------------------------------
+
+
+================================== Reports ===============================
+
+        1.Books Currently Borrowed
+        2.Overdue Books
+        3.Members with Pending Fines
+        4.Most Borrowed Books
+        5.Available Books
+        6.List All Members
+        7.Member Borrow History
+        8.Exit
+6
+
+============================ MEMBER LIST ============================
+
+
+Id : 1 | Name : Library Admin | Email : admin@library.com
+Phone No : 9876543210 | MemberShip : Student
+-----------------------------------------------------------------------
+
+
+Id : 2 | Name : John Doe | Email : john@gmail.com
+Phone No : 1234567890 | MemberShip : Basic
+-----------------------------------------------------------------------
+
+
+Id : 3 | Name : Nandhiraja K | Email : nandhi@gmail.com
+Phone No : 0987654312 | MemberShip : Student
+-----------------------------------------------------------------------
+
+
+Id : 4 | Name : Ramesh | Email : ramesh@gmail.com
+Phone No : 54321890 | MemberShip : Premium
+-----------------------------------------------------------------------
+
+
+================================== Reports ===============================
+
+        1.Books Currently Borrowed
+        2.Overdue Books
+        3.Members with Pending Fines
+        4.Most Borrowed Books
+        5.Available Books
+        6.List All Members
+        7.Member Borrow History
+        8.Exit
+7
+Enter Member Id : 3
+
+=============== MEMBER BORROW HISTORY ID : 3 ==================
+
+Book     : Harry Potter and the Sorcerer's Stone
+Borrowed : 29/04/2026
+Returned : 07/05/2026
+Status   : Returned
+-----------------------------------------------------------------------
+
+Book     : Gone Girl
+Borrowed : 30/03/2026
+Returned : 14/04/2026
+Status   : Returned
+-----------------------------------------------------------------------
+
+Book     : The Da Vinci Code
+Borrowed : 17/05/2026
+Returned : Not Returned
+Status   : Borrowed
+-----------------------------------------------------------------------
+
+
+================================== Reports ===============================
+
+        1.Books Currently Borrowed
+        2.Overdue Books
+        3.Members with Pending Fines
+        4.Most Borrowed Books
+        5.Available Books
+        6.List All Members
+        7.Member Borrow History
+        8.Exit
+6
+
+============================ MEMBER LIST ============================
+
+
+Id : 1 | Name : Library Admin | Email : admin@library.com
+Phone No : 9876543210 | MemberShip : Student
+-----------------------------------------------------------------------
+
+
+Id : 2 | Name : John Doe | Email : john@gmail.com
+Phone No : 1234567890 | MemberShip : Basic
+-----------------------------------------------------------------------
+
+
+Id : 3 | Name : Nandhiraja K | Email : nandhi@gmail.com
+Phone No : 0987654312 | MemberShip : Student
+-----------------------------------------------------------------------
+
+
+Id : 4 | Name : Ramesh | Email : ramesh@gmail.com
+Phone No : 54321890 | MemberShip : Premium
+-----------------------------------------------------------------------
+
+
+================================== Reports ===============================
+
+        1.Books Currently Borrowed
+        2.Overdue Books
+        3.Members with Pending Fines
+        4.Most Borrowed Books
+        5.Available Books
+        6.List All Members
+        7.Member Borrow History
+        8.Exit
+8
+
+Our Management options
+
+        1.Book Management
+        2.User Management
+        3.Category Management
+        4.Membership Management
+        5.Report
+        6.Exit
+6
+        1.Login
+        2.Register Member
+        3.Quit App
+
