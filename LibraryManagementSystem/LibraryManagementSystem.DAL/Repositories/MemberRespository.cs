@@ -1,6 +1,7 @@
 using LibraryManagementSystem.Core.Models;
 using LibraryManagementSystem.DAL.DBContext;
 using LibraryManagementSystem.DAL.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.DAL.Repositories
 {
@@ -25,17 +26,17 @@ namespace LibraryManagementSystem.DAL.Repositories
 
         public List<Member> GetAllMembers()
         {
-            return _context.Members.ToList();
+            return _context.Members.Include(m => m.MembershipType).ToList();
         }
 
         public Member? GetByEmail(string email)
         {
-            return _context.Members.FirstOrDefault(m=>m.Email==email);
+            return _context.Members.Include(m => m.MembershipType).FirstOrDefault(m=>m.Email==email);
         }
 
         public Member? GetById(int memberId)
         {
-             return _context.Members.Find(memberId);
+             return _context.Members.Include(m => m.MembershipType).FirstOrDefault(m => m.MemberId == memberId);
         }
 
         public bool UpdateMember(Member member)

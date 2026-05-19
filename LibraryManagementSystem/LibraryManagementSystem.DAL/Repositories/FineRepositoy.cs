@@ -31,6 +31,9 @@ namespace LibraryManagementSystem.DAL.Repositories
             return _context.Fines
                     .Include(f => f.BorrowTransaction)
                     .ThenInclude(bt => bt.Member)
+                    .Include(f => f.BorrowTransaction)
+                    .ThenInclude(bt => bt.BookCopy)
+                    .ThenInclude(bc => bc.BookTitle)
                     .Where(f => f.BorrowTransaction.MemberId == memberId)
                     .ToList();
         }
@@ -40,13 +43,16 @@ namespace LibraryManagementSystem.DAL.Repositories
             return _context.Fines
                     .Include(f => f.BorrowTransaction)
                     .ThenInclude(bt => bt.Member)
+                    .Include(f => f.BorrowTransaction)
+                    .ThenInclude(bt => bt.BookCopy)
+                    .ThenInclude(bc => bc.BookTitle)
                     .Where(f => f.BorrowTransaction.MemberId == memberId && f.IsPaid == false)
                     .ToList();
         }
 
         public decimal GetTotalUnpaidFine(int memberId)
         {
-            var result = _context.Database.SqlQuery<decimal>($"SELECT calculate_member_fine({memberId})").FirstOrDefault();
+            var result = _context.Database.SqlQuery<decimal>($"SELECT calculate_member_fine({memberId}) AS \"Value\"").FirstOrDefault();
             return result;
         }
 
@@ -66,6 +72,9 @@ namespace LibraryManagementSystem.DAL.Repositories
             return _context.Fines
                     .Include(f => f.BorrowTransaction)
                     .ThenInclude(bt => bt.Member)
+                    .Include(f => f.BorrowTransaction)
+                    .ThenInclude(bt => bt.BookCopy)
+                    .ThenInclude(bc => bc.BookTitle)
                     .ToList();
         }
     } 

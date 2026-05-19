@@ -32,7 +32,7 @@ namespace LibraryManagementSystem.DAL.Repositories
 
         public List<BookTitle> GetAllBooks()
         {
-            return _context.BookTitles.Include(bt => bt.Category).ToList();
+            return _context.BookTitles.Include(bt => bt.Category).Include(bt => bt.BookCopies).ToList();
         }
 
          public List<BookCopy> GetAllBookCopies()
@@ -71,12 +71,18 @@ namespace LibraryManagementSystem.DAL.Repositories
 
         public List<BookTitle> SearchBooks(string keyword)
         {
-            
-            return  _context.BookTitles.Where(b=> b.Title.Contains(keyword)||
-                                                    b.Author.Contains(keyword)||
-                                                    b.Category.Name.Contains(keyword)).ToList();
-            
-            
+            if (string.IsNullOrWhiteSpace(keyword))
+                return new List<BookTitle>();
+        
+            string searchPattern = $"%{keyword}%";
+        
+            return _context.BookTitles
+                .Include(b => b.Category)
+                .Include(b => b.BookCopies)
+                .Where(b => EF.Functions.ILike(b.Title, searchPattern) ||
+                            EF.Functions.ILike(b.Author, searchPattern) ||
+                            EF.Functions.ILike(b.Category.Name, searchPattern))
+                .ToList();
         }
 
         public void UpdateCopy(BookCopy bookCopy)
