@@ -37,10 +37,12 @@ namespace LibraryManagementSystem.PL
         }
 
         void Run()
-        {
-            Console.WriteLine("\n ==================================== Library =========================================\n");
+        {   
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\n ================================== Library ========================================\n");
+            Console.ResetColor();
             while(true){
-                Console.WriteLine("\n1.Login\n2.Register Member\n3.Exit");
+                Console.WriteLine("\t1.Login\n\t2.Register Member\n\t3.Quit App\n");
                 string userInput = Console.ReadLine()??"";
                 switch (userInput)
                 {
@@ -55,10 +57,12 @@ namespace LibraryManagementSystem.PL
 
                         break;
                     case "3":
-                        Console.WriteLine("Goodbye!");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("\n================================ --- Thank you --- =================================\n");
+                        Console.ResetColor();
                         return;
                     default:
-                        Console.WriteLine("Enter the valid input");
+                        Console.WriteLine("\nEnter the valid input\n");
                         break;
 
                 }
@@ -67,27 +71,28 @@ namespace LibraryManagementSystem.PL
 
 
        private Member? _handleRegistration()
-        {
-            Console.WriteLine("\n============================== Registration ========================================\n");
-            Console.Write("\nEnter your Full Name : \n");
+        {   
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("\n============================= Registration ======================================\n");
+            Console.ResetColor();
+            Console.Write("Enter your Full Name : ");
             string userName = Console.ReadLine()??"";
             Console.WriteLine();
-            Console.Write("\nEnter your Email id : \n");
+            Console.Write("Enter your Email id : ");
             string userEmail = Console.ReadLine()??"";
             Console.WriteLine();
             
-            Console.Write("\nEnter your password\n");
+            Console.Write("Enter your password : ");
             string userPassword = Console.ReadLine()??"";
             Console.WriteLine();
 
-            Console.Write("\nEnter your Phone No : \n");
+            Console.Write("Enter your Phone No : ");
             string userPhoneNo = Console.ReadLine()??"";
           
 
-
-            
             _ShowAllMembership();    // show all the MemberShip 
             Member? registerMember = null;
+
             List<MembershipType>? memberships = memberShipService.GetAllMembershipType();
             if(memberships == null)
             {
@@ -104,19 +109,29 @@ namespace LibraryManagementSystem.PL
             {
                     for(int attmpt=0; attmpt<3;attmpt++) // Give 3 chance to choose the valid membership
                     {
-                    Console.Write("\nEnter your MemberShip SI no \n");
+                    Console.Write("\nEnter your MemberShip ID/SI No \n");
 
-                        if (int.TryParse(Console.ReadLine() ,out int membershipIndex)){
-                            registerMember = new Member(){
-                                Name=userName,
-                                Email = userEmail,
-                                Phone =userPhoneNo,
-                                Password = userPassword,
-                                MembershipTypeId = memberships[membershipIndex].MembershipTypeId,
-                                MemberRole = Enums.Role.User
-                            };
-
+                        if (int.TryParse(Console.ReadLine() ,out int membershipIndex))
+                        {
+                            if(membershipIndex<= memberships.Count)
+                            {
+                                    registerMember = new Member(){
+                                        Name=userName,
+                                        Email = userEmail,
+                                        Phone =userPhoneNo,
+                                        Password = userPassword,
+                                        MembershipTypeId = memberships[membershipIndex].MembershipTypeId,
+                                        MemberRole = Enums.Role.User
+                                    };
+                                break;   // Stop if user enter valid input
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Membership not avilalbe in Id {membershipIndex}");
+                                continue;
+                            }
                         }
+
                         else
                         {
                             Console.WriteLine("Unalbe to get Membership please enter valid input SiNo");
@@ -143,8 +158,10 @@ namespace LibraryManagementSystem.PL
         private void _handleLogin()
         {
             Member? currentMember = null;
-            Console.WriteLine("\n============================== LOGIN ========================================\n");
-            Console.Write("\nEnter your Email id : ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("\n================================= LOGIN ==========================================\n");
+            Console.ResetColor();
+            Console.Write("Enter your Email id : ");
             string userEmail = Console.ReadLine()??"";
             Console.Write("Enter your Password : ");
             string userPassword = Console.ReadLine()??"";
@@ -185,14 +202,16 @@ namespace LibraryManagementSystem.PL
          private  void _HandleAdminOperations(Member member)
         {
             
-
-            Console.WriteLine("\n=============================== Library Management : Access - Admin =================================== \n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n==================== Library Management : Access - Admin ========================= \n");
             Console.WriteLine($"Admin Name : {member.Name} \n=================================== \n");
+            Console.ResetColor();
+
             while (true)
             {
    
-                 Console.WriteLine("Our Management options\n");
-                 Console.WriteLine("1.Book Management\n2.User Management\n3.Category Management\n4.Membership Management\n5.Report\n6.Exit");
+                 Console.WriteLine("\nOur Management options\n");
+                 Console.WriteLine("\t1.Book Management\n\t2.User Management\n\t3.Category Management\n\t4.Membership Management\n\t5.Report\n\t6.Exit");
                  string adminInput = Console.ReadLine()??"";
 
                 // all handle by partial admin helper
@@ -226,13 +245,16 @@ namespace LibraryManagementSystem.PL
 
         private void _HandleMemberOperations(Member member)
         {
-            Console.WriteLine("\n=============================== Library  : Access - User =================================== \n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n======================== Library  : Access - User ================================ \n");
             Console.WriteLine($"User Name : {member.Name} \n=================================== \n");
+            Console.ResetColor();
+
             while (true)
             {
    
-                 Console.WriteLine("Choose options\n");
-                 Console.WriteLine("1.See all books \n2.Borrow New Book \n3.Return Books\n4.My Borrow History \n5.My Fine History \n6.Exit");
+                 Console.WriteLine("\nChoose options\n");
+                 Console.WriteLine("\t1.See all books \n\t2.Borrow New Book \n\t3.Return Books\n\t4.My Borrow History \n\t5.My Fine History \n\t6.Exit");
                  string adminInput = Console.ReadLine()??"";
 
                 // all handle by partial admin helper
