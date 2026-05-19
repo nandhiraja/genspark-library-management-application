@@ -11,13 +11,14 @@ namespace LibraryManagementSystem.PL
             while(true)
             {
                 Console.WriteLine("\n================================== Reports ===============================\n");
-                Console.WriteLine("1.Books Currently Borrowed");
-                Console.WriteLine("2.Overdue Books");
-                Console.WriteLine("3.Members with Pending Fines");
-                Console.WriteLine("4.Most Borrowed Books");
-                Console.WriteLine("5.Available Books");
-                Console.WriteLine("6.Member Borrow History");
-                Console.WriteLine("7.Exit");
+                Console.WriteLine("\t1.Books Currently Borrowed");
+                Console.WriteLine("\t2.Overdue Books");
+                Console.WriteLine("\t3.Members with Pending Fines");
+                Console.WriteLine("\t4.Most Borrowed Books");
+                Console.WriteLine("\t5.Available Books");
+                Console.WriteLine("\t6.List All Members");
+                Console.WriteLine("\t7.Member Borrow History");
+                Console.WriteLine("\t8.Exit");
 
                 string choice = Console.ReadLine()??"";
                 switch(choice)
@@ -38,6 +39,9 @@ namespace LibraryManagementSystem.PL
                         reportService.ShowAvailableBooks();
                         break;
                     case "6":
+                        reportService.ShowAllMembers();
+                        break;
+                    case "7":
                         Console.Write("Enter Member Id : ");
                         if(int.TryParse(Console.ReadLine(), out int memberId))
                         {
@@ -48,7 +52,7 @@ namespace LibraryManagementSystem.PL
                             Console.WriteLine("Invalid Member Id");
                         }
                         break;
-                    case "7":
+                    case "8":
                         return;
                     default:
                         Console.WriteLine("Enter valid option");

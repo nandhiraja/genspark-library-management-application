@@ -1,5 +1,7 @@
 using LibraryManagementSystem.Core.Models;
 using LibraryManagementSystem.Core.Enums;
+using System.Reflection;
+using System.Drawing;
 
 namespace LibraryManagementSystem.PL
 {
@@ -10,7 +12,7 @@ namespace LibraryManagementSystem.PL
         private void _handleBorrowBooks(Member member)
         {
             Console.WriteLine("========================== Borrow Books ====================\n");
-            Console.WriteLine("Choose option: \n1.See all books \n2.Search book");
+            Console.WriteLine("Choose option: \n\t1.See all books \n\t2.Search book");
             switch (Console.ReadLine() ?? "")
             {
                 case "1":
@@ -23,23 +25,35 @@ namespace LibraryManagementSystem.PL
                     Console.WriteLine("Enter valid input...");
                     break;
             }
-            Console.Write("\nEnter Book Title Id to borrow :  ");
-            if(int.TryParse(Console.ReadLine(),out int bookTitleId)){
-                BookTitle? bookTitle = bookService.GetBookTitleByID(bookTitleId);
-                if(bookTitle != null){
-                    try{
-                        borrowService.BorrowBook(member,bookTitle);
-                        Console.WriteLine("Book borrowed successfully!");
+            Console.WriteLine("\nChoose: \n\t1.Borrow Now\n\t2.Exit\n");
+            switch (Console.ReadLine() ?? ""){
+                case "1":
+                    Console.Write("\nEnter Book Title Id to borrow :  ");
+                    if(int.TryParse(Console.ReadLine(),out int bookTitleId)){
+                        BookTitle? bookTitle = bookService.GetBookTitleByID(bookTitleId);
+                        if(bookTitle != null){
+                            try{
+                                borrowService.BorrowBook(member,bookTitle);
+                                Console.WriteLine("Book borrowed successfully!");
+                            }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine($"Unable to borrow: {ex.Message}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Book not found");
+                        }
+                        
                     }
-                    catch(Exception ex)
-                    {
-                        Console.WriteLine($"Unable to borrow: {ex.Message}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Book not found");
-                }
+                    break;
+                    case "2":
+                        Console.WriteLine("Geting back..");
+                        return;
+                    default:
+                        Console.WriteLine("Enter the correct option..");
+                        break;
             }
         }
 
@@ -77,7 +91,7 @@ namespace LibraryManagementSystem.PL
             }
 
             Console.WriteLine("Is the book in good condition?");
-            Console.WriteLine("1.Good (Available)\n2.Damaged\n3.Lost");
+            Console.WriteLine("\t1.Good (Available)\n\t2.Damaged\n\t3.Lost");
             string conditionChoice = Console.ReadLine()??"";
 
             BookStatus bookStatus = BookStatus.Available;
@@ -138,12 +152,20 @@ namespace LibraryManagementSystem.PL
             {
                 Console.WriteLine("Pending Fines :\n");
                 foreach(var fine in unpaidFines)
-                {
-                    Console.WriteLine($"FineId: {fine.FineId} | BorrowId: {fine.BorrowId} | Amount: Rs.{fine.Amount} | Paid: {fine.IsPaid}");
+                {   
+                    string bookTitle = fine.BorrowTransaction?.BookCopy?.BookTitle?.Title ?? "Unknown Book";
+                    
+                    Console.WriteLine($"FineId: {fine.FineId} | Book: {bookTitle}");
+                    Console.ForegroundColor = fine.IsPaid ? ConsoleColor.Green : ConsoleColor.Red;
+                    Console.WriteLine($"Amount: Rs.{fine.Amount} | Paid: {fine.IsPaid}");
+                    Console.ResetColor();
+                    Console.WriteLine("--------------------------------------------------");
                 }
 
                 decimal total = unpaidFines.Sum(f => f.Amount);
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine($"\nTotal Pending : Rs.{total}");
+                Console.ResetColor();
                 Console.WriteLine("\nPay a fine? yes/no");
                 string answer = Console.ReadLine()??"";
 
@@ -159,7 +181,7 @@ namespace LibraryManagementSystem.PL
                             return;
                         }
                         fine.IsPaid = true;
-                        fine.PaidDate = DateTime.Now;
+                        fine.PaidDate = DateTime.UtcNow;
 
                         if(fineService.UpdateFine(fine))
                         {
@@ -179,8 +201,8 @@ namespace LibraryManagementSystem.PL
             Console.Write("\nSearch (Type: Title/ Author / Category or [to exit type 'exit'] ) : ");
             string searchInput = Console.ReadLine()??"";
 
-            searchInput = searchInput.ToLower();
-            if(searchInput == "exit"){return;}
+            string searchInputLower = searchInput.ToLower();
+            if(searchInputLower == "exit"){return;}
             List<BookTitle>? bookTitles = bookService.searchBooks(searchInput);
                 if (bookTitles == null || bookTitles.Count == 0)
                 {
@@ -190,7 +212,18 @@ namespace LibraryManagementSystem.PL
                 {
                     foreach(var books in bookTitles)
                     {
-                        Console.WriteLine($"Id: {books.BookTitleId} | Title: {books.Title} | Author: {books.Author} | Category: {books.Category?.Name}");
+                        int availableCount = books.BookCopies?.Count(c => c.Status == BookStatus.Available) ?? 0;
+
+                        Console.WriteLine($"BookTitleId : {books.BookTitleId}");
+                        Console.WriteLine($"Title       : {books.Title}");
+                        Console.WriteLine($"Author      : {books.Author}");
+                        Console.WriteLine($"Category    : {books.Category?.Name}");
+                        
+                        Console.ForegroundColor = availableCount > 0 ? ConsoleColor.Green : ConsoleColor.Red;
+                        Console.WriteLine($"Available   : {availableCount} copies");
+                        Console.ResetColor();
+                        
+                        Console.WriteLine("----------------------------------------------------------------------------\n");
                     }
                 }
             

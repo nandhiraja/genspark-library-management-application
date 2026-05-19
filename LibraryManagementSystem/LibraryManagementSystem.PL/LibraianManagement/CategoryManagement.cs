@@ -9,7 +9,7 @@ namespace LibraryManagementSystem.PL
         
           public void _handleCategoryManagement()
         {
-            Console.WriteLine("1.View All Categories \n2.Add Category \n3.Exit");
+            Console.WriteLine("\t1.View All Categories \n\t2.Add Category \n\t3.Exit");
                  string adminInput = Console.ReadLine()??"";
                  switch (adminInput)
                  {

@@ -8,7 +8,7 @@ namespace LibraryManagementSystem.PL
     {
         public void _handleUserManagement()
         {
-            Console.WriteLine("1.View All Members \n2.Update Member Active Status \n3.Search Member \n4.Exit");
+            Console.WriteLine("\t1.View All Members \n\t2.Update Member Active Status \n\t3.Search Member \n\t4.Exit");
             string adminInput = Console.ReadLine()??"";
             switch (adminInput)
             {
@@ -77,7 +77,7 @@ namespace LibraryManagementSystem.PL
 
         private void _handleSearchMember()
         {
-            Console.Write("Search by (1.Email  2.Phone) : ");
+            Console.Write("Search by (\t1.Email  \t2.Phone) : ");
             string choice = Console.ReadLine()??"";
 
             if(choice == "1")

@@ -1,5 +1,6 @@
 
 using LibraryManagementSystem.Core.Models;
+using LibraryManagementSystem.Core.Enums;
 
 namespace LibraryManagementSystem.PL
 {
@@ -10,7 +11,7 @@ namespace LibraryManagementSystem.PL
         public void _handleBookManagement()
         {
              Console.WriteLine("Books Management options\n");
-                Console.WriteLine("1.BookTitleManagement\n2. BookCopiesManagement \n3.Exit");
+                Console.WriteLine("\t1.BookTitleManagement\n\t2.BookCopiesManagement \n\t3.Exit\n");
 
                  string adminInput = Console.ReadLine()??"";
                  switch (adminInput)
@@ -45,7 +46,7 @@ namespace LibraryManagementSystem.PL
         
         public void _handleBookTitleManagement()
         {
-               Console.WriteLine("1.Add New book \n2. Update existing books \n3.Delete Existing Book \n4.Exit");
+               Console.WriteLine("\t1.Add New book \n\t2.Update existing books \n\t3.Delete Existing Book \n\t4.Exit\n");
                 string adminInput = Console.ReadLine()??"";
                 switch (adminInput)
                  {
@@ -72,7 +73,7 @@ namespace LibraryManagementSystem.PL
 
           private void _handleBookCopyManagement()
         {
-                Console.WriteLine("1.Add new Book Copy \n2. Update existing books Copy \n3.Delete Existing Book Copy \n4.Exit");
+                Console.WriteLine("\t1.Add new Book Copy \n\t2. Update existing books Copy \n\t3.Delete Existing Book Copy \n\t4.Exit\n");
                 string adminInput = Console.ReadLine()??"";
                 switch (adminInput)
                  {
@@ -151,8 +152,9 @@ namespace LibraryManagementSystem.PL
         {
             Console.WriteLine("Enter the book copy Code eg : BC-xxxx");
             string copyCode = Console.ReadLine()??"";
-            Console.WriteLine("Enter the book Book Title Id");
+            
             _showAllBookTitles();
+            Console.WriteLine("Enter the book Book Title Id");
             if(int.TryParse(Console.ReadLine(),out int bookTitleId))
             {
                 BookCopy bookCopy = new BookCopy();
@@ -191,7 +193,7 @@ namespace LibraryManagementSystem.PL
 
                 BookTitle? bookTitle =  bookService.GetBookTitleByID(bookId);
                 if(bookTitle == null) return;
-                Console.Write("What to edit: \n1.Title\n2.Author\n3.Categroy");
+                Console.Write("What to edit: \n\t1.Title\n\t2.Author\n\t3.Categroy");
                 string updatePref = Console.ReadLine()??"";
                 switch (updatePref)
                 {
@@ -249,7 +251,7 @@ namespace LibraryManagementSystem.PL
             }
 
             Console.WriteLine($"Current status: {bookCopy.Status}");
-            Console.WriteLine("1.Available\n2.Damaged\n3.Lost");
+            Console.WriteLine("\t1.Available\n\t2.Damaged\n\t3.Lost");
             string choice = Console.ReadLine()??"";
 
             switch(choice)
@@ -283,9 +285,20 @@ namespace LibraryManagementSystem.PL
             Console.WriteLine(" ========================= All available books =============================\n");
             foreach(var bookTitle in bookService.ViewBooks())
             {
-                Console.WriteLine(bookTitle.ToString());
+                int availableCount = bookTitle.BookCopies?.Count(c => c.Status == BookStatus.Available) ?? 0;
+                
+                Console.WriteLine($"BookTitleId : {bookTitle.BookTitleId}");
+                Console.WriteLine($"Title       : {bookTitle.Title}");
+                Console.WriteLine($"Author      : {bookTitle.Author}");
+                Console.WriteLine($"Category    : {bookTitle.Category?.Name}");
+                
+                Console.ForegroundColor = availableCount > 0 ? ConsoleColor.Green : ConsoleColor.Red;
+                Console.WriteLine($"Available   : {availableCount} copies");
+                Console.ResetColor();
+                
+                Console.WriteLine("----------------------------------------------------------------------------\n");
             }
-             Console.WriteLine(" ========================= ==================== =============================\n");
+             Console.WriteLine(" ===========================================================================\n");
 
         }
 

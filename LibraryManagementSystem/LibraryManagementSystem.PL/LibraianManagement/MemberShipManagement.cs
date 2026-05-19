@@ -9,7 +9,7 @@ namespace LibraryManagementSystem.PL
 
         public void _handleMembershipManagement()
                  {
-                 Console.WriteLine("1.View All Membership \n2.Add Membership \n3.Update Membership \n4.Exit");
+                 Console.WriteLine("\t1.View All Membership \n\t2.Add Membership \n\t3.Update Membership \n\t4.Exit");
                  string adminInput = Console.ReadLine()??"";
                  switch (adminInput)
                  {
@@ -84,7 +84,7 @@ namespace LibraryManagementSystem.PL
                 return;
             }
 
-            Console.WriteLine("What to update? \n1.Name \n2.Max Books \n3.Max Days");
+            Console.WriteLine("What to update? \n\t1.Name \n\t2.Max Books \n\t3.Max Days");
             string choice = Console.ReadLine()??"";
 
             switch(choice)
